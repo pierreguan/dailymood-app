@@ -1,0 +1,143 @@
+body {
+	padding-top: 3.5em;
+}
+
+pre {
+	font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555555;
+	font-weight: 300;
+	font-size: 1.1em;
+	border: none;
+	border-radius: 0;
+	padding: 0;
+	background: none;
+}
+
+/* Barre de navigation */
+#logo-navbar {
+	height: 175%;
+	margin-top: -0.40em;
+}
+
+/* Section ajouter une entrée */
+.add-article {
+	margin-top: 1em;
+	margin-bottom: 3em;
+}
+
+.add-article textarea {
+	font-weight: 300;
+	margin-top: 1em;
+}
+
+.add-article label {
+	font-size: 1.5em;
+}
+
+.add-article select {
+	margin-bottom: 2em;
+	margin-top: 1em;
+}
+
+/* Section entrées du journal */
+#journal-header {
+	background-color: steelblue;
+	padding: 2em;
+	margin-bottom: 2em;
+}
+
+#journal-header h1 {
+	text-align: center;
+	color: white;
+}
+
+.periode {
+	margin-bottom: 3em;
+}
+
+.article-journal {
+	padding: 1em;
+	margin-bottom: 1em;
+	border-radius: 10px;
+	background: transparent;
+	transition: background 0.5s;
+}
+
+.article-journal h3 {
+	margin-top: 0.3em;
+}
+
+.article-journal p {
+	font-weight: 300;
+	font-size: 1.1em;
+}
+
+.article-journal:hover {
+	background: aliceblue;
+	transition: background 0.5s;
+}
+
+.article-journal:hover .modifier-article {
+	opacity: 1;
+	transition: opacity 0.5s;
+}
+
+.titre-mois {
+	margin-bottom: 0.75em;
+	margin-top: 0.3em;
+}
+
+.titre-jour {
+	margin-bottom: 1em;
+}
+
+.titre-jour h3 {
+	display: inline;
+}
+
+.titre-jour h3 span {
+	padding-top: 0.2em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	padding-bottom: 0.1em;
+	border-radius: 15px;
+}
+
+.edit-button {
+	margin-right: 1em;
+}
+
+.modifier-article {
+	display: inline;
+	margin-left: 24em;
+	opacity: 0;
+	transition: opacity 0.5s;
+}
+
+.modifier-article a {
+	text-decoration: none;
+	transition: color 0.3s;
+}
+
+.modifier-article a:hover {
+	text-decoration: none;
+	color: black;
+	transition: color 0.3s;
+}
+
+/* Footer class */
+.footer {
+	text-align: center;
+	margin-bottom: 2em;
+}
+
+.footer ul {
+	margin: 2em;
+}
+
+.footer ul li {
+	display: inline;
+	margin-right: 1em;
+}

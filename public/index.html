@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+
+	<title>Dailymood App</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="http://bootswatch.com/lumen/bootstrap.min.css">
+
+	<!-- Fontawesome CDN -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	<link rel="stylesheet" type="text/css" href="css/custom.css">
+
+	<!-- Scripts loading -->
+	<script src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js"></script>
+
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+	<script src="http://cdn.ckeditor.com/4.4.7/basic/ckeditor.js"></script>
+
+	<script src="controllers/controller.js"></script>
+	<!-- // <script src="controllers/jquery.js"></script> -->
+
+</head>
+<body ng-app ng-controller="AppCtrl">
+
+	<nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">
+	        <img id="logo-navbar" alt="Dailymood" src="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/matte-blue-and-white-square-icons-alphanumeric/116503-matte-blue-and-white-square-icon-alphanumeric-letter-d.png">
+	      </a>
+	      <a class="navbar-brand" href="#">Dailymood</a>
+	    </div>
+
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li><a href="#">A propos</a></li>
+	        <li><a href="#">Mon journal</a></li>
+	        <li><a href="#">Mes statistiques</a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><button type="button" class="btn btn-default navbar-btn">Login</button></li>
+	        <li>&nbsp;&nbsp;</li>
+	        <li><button type="button" class="btn btn-default navbar-btn">Inscription</button></li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+
+	<div id="journal-header" class="container-fluid">
+		<h1>Mon journal intime</h1>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-2"></div>
+			
+			<div class="col-md-8">
+
+				<div class="add-article">
+					<form name="userForm" ng-submit="submitForm()" novalidate>
+						<div class="form-group" ng-class="{ 'has-error' : userForm.article.$invalid && !userForm.article.$pristine }">
+				            <label for="DescriptionInput">Qu'as-tu fait aujourd'hui ?</label>
+				            <textarea name="article" class="form-control" id="DescriptionInput" ng-model="inputText" rows="5" placeholder="Raconte un peu ta journée..." required></textarea>
+				            <p ng-show="userForm.article.$invalid && !userForm.article.$pristine" class="help-block">Hey ! Tu as bien quelque chose à raconter non ? Osef si c'est pas intéressant :p</p>
+				        </div>
+
+				        <div class="form-group" ng-class="{ 'has-error' : userForm.mood.$invalid && !userForm.mood.$pristine }">
+						    <label for="DescriptionInput">Donne une note sur 10 à ton humeur du jour !</label>
+						    <select name="mood" ng-model="inputMood" class="form-control" required>
+							  <option>1/10</option>
+							  <option>2/10</option>
+							  <option>3/10</option>
+							  <option>4/10</option>
+							  <option>5/10</option>
+							  <option>6/10</option>
+							  <option>7/10</option>
+							  <option>8/10</option>
+							  <option>9/10</option>
+							  <option>10/10</option>
+							</select>
+						</div>
+
+						<button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Ajouter à mon journal</button> &nbsp;
+						<button class="btn btn-info" ng-click="resetForm()">Reset</button>
+					</form>
+				</div>
+
+				<div class="periode" ng-repeat="periode in journal">
+					<h2 class="titre-mois page-header"><i class="fa fa-calendar"></i> &nbsp;{{periode[0].month}}&nbsp; <small>{{periode.length}} entrées</small></h2>
+
+					<div class="article-journal" ng-repeat="article in periode">
+						<div class="titre-jour">
+							<h3>{{article.day}} <small>à {{article.hour}}</small>&nbsp; <span ng-class="{'label label-warning': compareMood(article,'average'), 'label label-danger': compareMood(article,'bad'), 'label label-success': compareMood(article,'good')}"><i ng-class="{'fa fa-meh-o': compareMood(article,'average'), 'fa fa-frown-o': compareMood(article,'bad'), 'fa fa-smile-o': compareMood(article,'good')}"></i></span></h3>
+							<div class="modifier-article">
+								<a href="#" class="edit-button"><i class="fa fa-pencil-square-o fa-lg"></i> Editer</a>
+								<a href="" ng-click="remove(periode,$index)"><i class="fa fa-trash-o fa-lg"></i> Supprimer</a>
+							</div>
+						</div>
+						<pre>{{article.texte}}</pre>
+					</div>
+
+				</div>
+
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+	</div>
+
+	<div class="footer">
+		<hr>
+		<ul>
+			<li>
+				<span class="fa-stack fa-lg">
+				  <i class="fa fa-circle fa-stack-2x"></i>
+				  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+				</span>
+			</li>
+			<li>
+				<span class="fa-stack fa-lg">
+				  <i class="fa fa-circle fa-stack-2x"></i>
+				  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+				</span>
+			</li>
+			<li>
+				<span class="fa-stack fa-lg">
+				  <i class="fa fa-circle fa-stack-2x"></i>
+				  <i class="fa fa-github-square fa-stack-1x fa-inverse"></i>
+				</span>
+			</li>
+			<li>
+				<span class="fa-stack fa-lg">
+				  <i class="fa fa-circle fa-stack-2x"></i>
+				  <i class="fa fa-flickr fa-stack-1x fa-inverse"></i>
+				</span>
+			</li>
+		</ul>
+		
+		<p>Designed and developed by @<a href="#">Pierre GUAN</a></p>
+	</div>
+
+</body>
+
+</html>
